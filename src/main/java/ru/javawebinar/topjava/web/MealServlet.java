@@ -33,13 +33,13 @@ public class MealServlet extends HttpServlet {
         List<Meal> mealList =  Arrays.asList(
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 30), "Завтрак", 500),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 500),
-                new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 1501),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 1500),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 410));
 
         List<MealWithExceed> mealWithExceedList =
-                MealsUtil.getFilteredWithExceeded(mealList, LocalTime.MIN, LocalTime.MAX, 1500);
+                MealsUtil.getFilteredWithExceeded(mealList, LocalTime.MIN, LocalTime.MAX, 2000);
         request.setAttribute("meals", mealWithExceedList);
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
