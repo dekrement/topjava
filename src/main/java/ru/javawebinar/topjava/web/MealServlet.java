@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.web;
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,15 +38,8 @@ public class MealServlet extends HttpServlet {
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 410));
 
-        List<MealWithExceed> mealWithExceedList = mealList
-                .stream()
-                .map( m ->
-                        new MealWithExceed(
-                                m.getDateTime(),
-                                m.getDescription(),
-                                m.getCalories(),
-                                Math.random() < 0.5))
-                .collect(Collectors.toList());
+        List<MealWithExceed> mealWithExceedList =
+                MealsUtil.getFilteredWithExceeded(mealList, LocalTime.MIN, LocalTime.MAX, 1500);
         request.setAttribute("meals", mealWithExceedList);
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
