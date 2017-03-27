@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.dao;
+package ru.javawebinar.topjava.ndao;
 
 import ru.javawebinar.topjava.model.Meal;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by web on 27.03.2017.
  */
 public interface MealDAO {
-    static int test = 1;
+
     void create(Meal meal);
 
     void update(Meal meal);
