@@ -1,8 +1,8 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.dao1.MealDAO;
-import ru.javawebinar.topjava.dao1.impl.MapMealDAO;
+import ru.javawebinar.topjava.dao.MealDAO;
+import ru.javawebinar.topjava.dao.impl.MapMealDAO;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
