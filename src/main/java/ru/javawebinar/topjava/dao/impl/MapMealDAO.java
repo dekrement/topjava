@@ -1,6 +1,6 @@
-package ru.javawebinar.topjava.ndao.impl;
+package ru.javawebinar.topjava.dao.impl;
 
-import ru.javawebinar.topjava.ndao.MealDAO;
+import ru.javawebinar.topjava.dao.MealDAO;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
