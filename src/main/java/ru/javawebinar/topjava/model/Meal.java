@@ -9,8 +9,7 @@ import java.time.LocalTime;
  * 11.01.2015.
  */
 public class Meal {
-    private Integer id = null;
-
+    private int id;
     private final LocalDateTime dateTime;
 
     private final String description;
@@ -43,11 +42,11 @@ public class Meal {
         return dateTime.toLocalTime();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
-    public Integer getId() {
-        return id;
+    public void setId(int id) {
+        this.id = id;
     }
 }
