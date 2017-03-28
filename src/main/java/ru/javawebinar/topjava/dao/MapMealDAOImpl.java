@@ -1,13 +1,9 @@
 package ru.javawebinar.topjava.dao;
 
-import ru.javawebinar.topjava.dao.MealDAO;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,7 +17,7 @@ public class MapMealDAOImpl implements MealDAO {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     public MapMealDAOImpl() {
-        List<Meal> mealList = MealsUtil.meals;
+        List<Meal> mealList = MealsUtil.getMeals();
 
         mealList.forEach(this::create);
     }
