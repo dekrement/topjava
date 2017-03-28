@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.dao.MealDAO;
-import ru.javawebinar.topjava.dao.impl.MapMealDAO;
+import ru.javawebinar.topjava.dao.MapMealDAOImpl;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -27,7 +27,7 @@ public class MealServlet extends HttpServlet {
     private final MealDAO mealDAO;
 
     public MealServlet() {
-        mealDAO = new MapMealDAO();
+        mealDAO = new MapMealDAOImpl();
     }
 
     @Override
@@ -54,15 +54,12 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
         String forward = "/meals.jsp";
 
-        if (action == null)
-            action = "meals";
-
-        if (action.equalsIgnoreCase("update")) {
+        if ("update".equalsIgnoreCase(action)) {
             request.setAttribute("meal", mealDAO.getById(Integer.parseInt(request.getParameter("id"))));
             forward = "/update.jsp";
-        } else if (action.equalsIgnoreCase("add")) {
+        } else if ("add".equalsIgnoreCase(action)) {
             forward = "/update.jsp";
-        } else if (action.equalsIgnoreCase("delete")) {
+        } else if ("delete".equalsIgnoreCase(action)) {
             mealDAO.delete(Integer.parseInt(request.getParameter("id")));
             response.sendRedirect(request.getContextPath() + "/meals");
             return;

@@ -14,6 +14,7 @@
         <th>Время</th>
         <th>Описание</th>
         <th>Калории</th>
+        <th>Действия</th>
     </tr>
     </thead>
     <tbody>
@@ -33,6 +34,13 @@
 </table>
 <p><a href="?action=add">Добавить</a></p>
 <style>
+    .meals {
+        border: 1px solid #000000;
+    }
+    .meals td, .meals th {
+        padding: 5px 10px;
+        border: 1px solid #000000;
+    }
     .meals td {
         color: green;
     }
