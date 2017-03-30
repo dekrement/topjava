@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://example.com/functions" %>
+<jsp:useBean id="meals" type="java.util.List<ru.javawebinar.topjava.model.MealWithExceed>" scope="request"/>
 <html>
 <head>
     <title>Meal list</title>
