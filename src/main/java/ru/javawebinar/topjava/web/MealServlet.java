@@ -53,24 +53,21 @@ public class MealServlet extends HttpServlet {
         // in case user saves/updates a meal
         String id = request.getParameter("id");
         if (id != null) {
-            Meal meal;
-            if (id.isEmpty()) {
-                meal = new Meal(
-                        LocalDateTime.parse(request.getParameter("dateTime")),
-                        request.getParameter("description"),
-                        Integer.valueOf(request.getParameter("calories")), null);
-                controller.save(meal);
+            Meal meal = new Meal(
+                    id.isEmpty() ? null : Integer.parseInt(id),
+                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.valueOf(request.getParameter("calories")),
+                    null
+                    );
+            if (meal.getId() == null) {
                 LOG.info("Save " + meal.toString());
+                controller.save(meal);
             } else {
-                Meal oldMeal = controller.get(Integer.parseInt(id));
-                meal = new Meal(
-                        oldMeal.getId(),
-                        LocalDateTime.parse(request.getParameter("dateTime")),
-                        request.getParameter("description"),
-                        Integer.valueOf(request.getParameter("calories")), oldMeal.getUserId());
-                controller.update(meal);
                 LOG.info("Update " + meal.toString());
+                controller.update(meal);
             }
+
 
             response.sendRedirect("meals");
             return;

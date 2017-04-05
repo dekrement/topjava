@@ -27,25 +27,17 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @PostConstruct
     private void init() {
-        MealsUtil.MEALS.forEach(this::save);
+        MealsUtil.MEALS.forEach(meal -> save(meal, meal.getUserId()));
     }
 
     @Override
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
-            meal.setUserId(userId);
-        } else if(get(meal.getId(), userId) == null) {
-            return null;
         }
-
+        meal.setUserId(userId);
         repository.put(meal.getId(), meal);
         return meal;
-    }
-
-    // this private method's sole purpose is for providing test data from MealsUtil.MEALS
-    private void save(Meal meal) {
-        save(meal, meal.getUserId());
     }
 
     @Override

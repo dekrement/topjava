@@ -45,11 +45,9 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         LOG.info("getAll");
-        List<User> users = repository.values().stream()
+        return repository.values().stream()
                 .sorted(Comparator.comparing(User::getName).thenComparing(User::getEmail))
                 .collect(Collectors.toList());
-
-        return !users.isEmpty() ? users : Collections.emptyList();
     }
 
     @Override

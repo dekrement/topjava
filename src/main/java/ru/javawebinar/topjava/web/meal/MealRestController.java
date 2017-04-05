@@ -44,11 +44,13 @@ public class MealRestController {
     }
 
     public void save(Meal meal) {
-        ValidationUtil.checkNew(meal);
         service.save(meal, AuthorizedUser.id());
     }
 
     public void update(Meal meal) throws NotFoundException {
-        service.save(meal, AuthorizedUser.id());
+        if (get(meal.getId()) != null) {
+            service.save(meal, AuthorizedUser.id());
+        }
+
     }
 }

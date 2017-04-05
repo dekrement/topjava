@@ -20,9 +20,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal save(Meal meal, int userId) throws NotFoundException {
-        Meal m = repository.save(meal, userId);
-        ValidationUtil.checkNotFound(m, meal.toString());
-        return m;
+        return ValidationUtil.checkNotFound(repository.save(meal, userId), meal.toString());
     }
 
     @Override
@@ -33,9 +31,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal get(int id, int userId) throws NotFoundException {
-        Meal meal = repository.get(id, userId);
-        ValidationUtil.checkNotFound(meal, String.format("meal with id=%d and userId=%d", id, userId));
-        return meal;
+        return ValidationUtil.checkNotFoundWithId(repository.get(id, userId), id);
     }
 
     @Override
