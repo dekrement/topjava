@@ -35,11 +35,6 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<MealWithExceed> getAll(int userId, LocalDate startDate, LocalDate endDate, int calories) {
-        return getAll(userId, startDate, endDate, LocalTime.MIN, LocalTime.MAX, calories);
-    }
-
-    @Override
     public List<MealWithExceed> getAll(int userId, LocalDate startDate, LocalDate endDate, LocalTime startTime,
                                        LocalTime endTime, int calories) {
         return MealsUtil.getFilteredWithExceeded(

@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -34,8 +35,10 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
+            meal.setUserId(userId);
         }
-        meal.setUserId(userId);
+        if (meal.getUserId() != userId)
+            return null;
         repository.put(meal.getId(), meal);
         return meal;
     }
@@ -57,6 +60,11 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 .filter(meal -> meal.getUserId() == userId && DateTimeUtil.isBetween(meal.getDate(), startDate, endDate))
                 .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<Meal> getAll(Integer userId) {
+        return getAll(userId, LocalDate.MIN, LocalDate.MAX);
     }
 }
 

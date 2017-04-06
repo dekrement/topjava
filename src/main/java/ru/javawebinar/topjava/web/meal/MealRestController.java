@@ -48,9 +48,6 @@ public class MealRestController {
     }
 
     public void update(Meal meal) throws NotFoundException {
-        if (get(meal.getId()) != null) {
-            service.save(meal, AuthorizedUser.id());
-        }
-
+        service.save(meal, AuthorizedUser.id());
     }
 }

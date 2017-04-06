@@ -17,4 +17,6 @@ public interface MealRepository {
     Meal get(int id, int userId);
 
     Collection<Meal> getAll(Integer userId, LocalDate startDate, LocalDate endDate);
+
+    Collection<Meal> getAll(Integer userId);
 }

@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.service;
 
-import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -16,8 +15,9 @@ public interface MealService {
 
     Meal get(int id, int userId) throws NotFoundException;
 
-    List<MealWithExceed> getAll(int userId, LocalDate startDate, LocalDate endDate, int calories);
-
+    default List<MealWithExceed> getAll(int userId, LocalDate startDate, LocalDate endDate, int calories) {
+        return getAll(userId, startDate, endDate, LocalTime.MIN, LocalTime.MAX, calories);
+    }
     List<MealWithExceed> getAll(int userId, LocalDate startDate, LocalDate endDate, LocalTime startTime,
                                 LocalTime endTime, int calories);
 
