@@ -25,9 +25,9 @@ Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery +
 - <a href="https://habrahabr.ru/post/308104/">Из юниоров в разработчики: получаем первую работу</a>
 
 #### Spring Pet-Clinic
-- <a href="https://github.com/spring-projects/spring-petclinic">Spring PetClinic Sample Application </a>
+- <a href="https://github.com/test-projects/test-petclinic">Spring PetClinic Sample Application </a>
 - <a href="http://petclinic.cloudapp.net/">Demo</a>
-- <a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">Presentation</a>
+- <a href="https://speakerdeck.com/michaelisvy/test-petclinic-sample-application">Presentation</a>
 
 ## ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) <a href="https://drive.google.com/file/d/0B9Ye2auQ_NsFSUNrdVc0bDZuX2s">Системы управления версиями. Git.</a>
 -  **<a href="https://github.com/JavaOPs/topjava/wiki/Git">Wiki по ведению проекта в Git</a>**
