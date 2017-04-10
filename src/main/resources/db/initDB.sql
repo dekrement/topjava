@@ -36,3 +36,4 @@ CREATE TABLE meals
 );
 
 CREATE INDEX meals_ix1 ON meals(user_id);
+CREATE UNIQUE INDEX meals_ix2 ON meals (user_id, date_time);
