@@ -52,9 +52,6 @@ public class MealServiceTest {
     public void testGet() throws Exception {
         Meal adminMeal = service.get(ADMIN_MEAL_ID_2, ADMIN_ID);
         MealTestData.MATCHER.assertEquals(ADMIN_MEAL_2, adminMeal);
-
-        Meal userMeal = service.get(USER_MEAL_ID_1, USER_ID);
-        MealTestData.MATCHER.assertEquals(USER_MEAL_1, userMeal);
     }
 
     @Test(expected = NotFoundException.class)
@@ -106,7 +103,9 @@ public class MealServiceTest {
         meal.setId(ADMIN_MEAL_2.getId());
         meal.setCalories(ADMIN_MEAL_2.getCalories());
         meal.setDateTime(ADMIN_MEAL_2.getDateTime());
-        meal.setDescription(ADMIN_MEAL_2.getDescription());
+
+        meal.setDescription("new description");
+        ADMIN_MEAL_2.setDescription("new description");
 
         service.update(meal, ADMIN_ID);
         MealTestData.MATCHER.assertEquals(meal, service.get(ADMIN_MEAL_ID_2, ADMIN_ID));
