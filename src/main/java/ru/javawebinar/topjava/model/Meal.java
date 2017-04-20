@@ -1,7 +1,13 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,11 +16,32 @@ import java.time.LocalTime;
  * GKislin
  * 11.01.2015.
  */
+@NamedQueries({
+        @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m where m.user.id=:user_id AND m.id=:id"),
+        @NamedQuery(name = Meal.UPDATE, query = "UPDATE Meal m SET m.description=:description, m.calories=:calories, " +
+                "m.dateTime=:dateTime WHERE m.id=:id AND m.user.id=:userId")
+})
+@Entity
+@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "meals_unique_user_datetime_idx")})
 public class Meal extends BaseEntity {
+
+    public static final String DELETE = "Meal.delete";
+    public static final String UPDATE = "Meal.update";
+
+    @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
+    @Column(name = "description", nullable = false)
+    @NotNull
+    @NotBlank
+    @NotEmpty
+    @Length(min = 5, max = 255)
     private String description;
 
+    @Column(name = "calories", nullable = false)
+    @NotNull
+    @Min(value = 10)
+    @Max(value = 10_000)
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,6 +60,7 @@ public class Meal extends BaseEntity {
         this.description = description;
         this.calories = calories;
     }
+
 
     public LocalDateTime getDateTime() {
         return dateTime;
