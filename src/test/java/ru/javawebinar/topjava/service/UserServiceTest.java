@@ -26,10 +26,9 @@ import static ru.javawebinar.topjava.UserTestData.*;
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
 })
-@RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(Profiles.ACTIVE_DB)
-public class UserServiceTest {
+abstract public class UserServiceTest {
 
     static {
         // Only for postgres driver logging

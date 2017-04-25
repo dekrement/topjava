@@ -1,11 +1,14 @@
 package ru.javawebinar.topjava.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.repository.MealRepository;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class MealServiceImpl implements MealService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MealServiceImpl.class);
     private final MealRepository repository;
 
     @Autowired
@@ -53,5 +57,10 @@ public class MealServiceImpl implements MealService {
     public Meal save(Meal meal, int userId) {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
+    }
+
+    @PostConstruct
+    private void logRepositoryImplementationName() {
+        LOG.info("Repository implementation loaded: " + repository.getClass());
     }
 }

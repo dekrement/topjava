@@ -19,7 +19,6 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public class JpaMealRepositoryImpl implements MealRepository {
-//TODO:patch 7 (download it and apply)
     @PersistenceContext
     private EntityManager em;
 
