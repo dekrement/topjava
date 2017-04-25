@@ -4,11 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.javawebinar.topjava.Profiles;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.util.Collections;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
@@ -18,10 +24,12 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final MealRepository mealRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository, MealRepository mealRepository) {
         this.repository = repository;
+        this.mealRepository = mealRepository;
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -40,6 +48,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User get(int id) throws NotFoundException {
         return checkNotFoundWithId(repository.get(id), id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public User getWithMeals(int id) throws NotFoundException {
+        if (!Profiles.REPOSITORY_IMPLEMENTATION.equals(Profiles.DATAJPA))
+            throw new UnsupportedOperationException();
+
+        User user = checkNotFoundWithId(repository.get(id), id);
+        List<Meal> meals = mealRepository.getAll(id);
+        if (meals == null)
+            user.setMeals(Collections.emptyList());
+        else
+            user.setMeals(meals);
+        return user;
+
     }
 
     @Override

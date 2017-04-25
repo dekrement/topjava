@@ -37,7 +37,7 @@ abstract public class UserServiceTest {
     }
 
     @Autowired
-    private UserService service;
+    protected UserService service;
 
     @Before
     public void setUp() throws Exception {
