@@ -17,23 +17,19 @@ import java.util.List;
 
 @Repository
 public class DataJpaMealRepositoryImpl implements MealRepository {
-    @PersistenceContext
-    EntityManager em;
 
+    @Autowired
+    private CrudUserRepository crudUserRepository;
     @Autowired
     private CrudMealRepository crudRepository;
 
     @Override
     public Meal save(Meal meal, int userId) {
-        User ref = em.getReference(User.class, userId);
-        if (meal.isNew()) {
-            meal.setUser(ref);
-        } else if (get(meal.getId(), userId) == null) {
+        if (!meal.isNew() && get(meal.getId(), userId) == null) {
             return null;
         }
-        meal.setUser(ref);
-        crudRepository.save(meal);
-        return meal;
+        meal.setUser(crudUserRepository.getOne(userId));
+        return crudRepository.save(meal);
     }
 
     @Override
