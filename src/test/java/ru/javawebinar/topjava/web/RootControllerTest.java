@@ -1,6 +1,11 @@
 package ru.javawebinar.topjava.web;
 
 import org.junit.Test;
+import ru.javawebinar.topjava.MealTestData;
+import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,5 +30,25 @@ public class RootControllerTest extends AbstractControllerTest {
                                 hasProperty("name", is(USER.getName()))
                         )
                 )));
+    }
+
+    @Test
+    public void testMeals() throws Exception {
+        List<MealWithExceed> expectedList = MealsUtil.getWithExceeded(MealTestData.MEALS, MealsUtil.DEFAULT_CALORIES_PER_DAY);
+        mockMvc.perform(get("/meals"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("meals"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
+                .andExpect(model().attribute("meals", hasSize(6)))
+                .andExpect(model().attribute("meals", hasItem(
+                        allOf(
+                                hasProperty("id", is(100007)),
+                                hasProperty("description", is("Ужин")),
+                                hasProperty("calories", is(510)),
+                                hasProperty("exceed", is(true))
+                        )
+                )));
+
     }
 }
