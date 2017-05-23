@@ -1,6 +1,6 @@
 function makeEditable() {
     $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
+        deleteRow($(this).closest("tr").attr("id"));
     });
 
     $('#detailsForm').submit(function () {
@@ -30,13 +30,39 @@ function deleteRow(id) {
 }
 
 function updateTable() {
-    $.get(ajaxUrl, function (data) {
+    var callback = function (data) {
         datatableApi.clear();
         $.each(data, function (key, item) {
             datatableApi.row.add(item);
         });
+
         datatableApi.draw();
-    });
+    };
+    var $filter = $("#filter");
+    if ($filter && $filter.length > 0) {
+        $.ajax({
+            type: "POST",
+            url: ajaxUrl + "filter",
+            data: $filter.serialize(),
+            success: function (data) {
+                callback(data);
+            }
+        });
+    } else {
+        $.get(ajaxUrl, function(data) {
+            callback(data)
+        });
+    }
+
+}
+
+function toJSONObject(formArray) {//serialize data function
+    var returnArray = {};
+    for (var i = 0; i < formArray.length; i++) {
+        if (formArray[i]['value'])
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+    }
+    return JSON.stringify(returnArray);
 }
 
 function save() {
@@ -44,7 +70,8 @@ function save() {
     $.ajax({
         type: "POST",
         url: ajaxUrl,
-        data: form.serialize(),
+        data: toJSONObject(form.serializeArray()),
+        contentType: "application/json",
         success: function () {
             $('#editRow').modal('hide');
             updateTable();

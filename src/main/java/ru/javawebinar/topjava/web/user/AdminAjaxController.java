@@ -31,16 +31,11 @@ public class AdminAjaxController extends AbstractUserController {
     }
 
     @PostMapping
-    public void createOrUpdate(@RequestParam("id") Integer id,
-                               @RequestParam("name") String name,
-                               @RequestParam("email") String email,
-                               @RequestParam("password") String password) {
-
-        User user = new User(id, name, email, password, Role.ROLE_USER);
+    public void createOrUpdate(@RequestBody User user) {
         if (user.isNew()) {
             super.create(user);
         } else {
-            super.update(user, id);
+            super.update(user, user.getId());
         }
     }
 }
